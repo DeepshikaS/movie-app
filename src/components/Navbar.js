@@ -3,7 +3,7 @@ import React from "react";
 export default function Navbar() {
   return (
     <div>
-      <nav className="navbar navbar-light bg-dark mb-5">
+      <nav className="navbar navbar-light bg-dark mb-4">
         <div className="container">
           <div className="navbar-header">
             <a className="navbar-brand text-white text-lg brand-text" href>
@@ -12,10 +12,10 @@ export default function Navbar() {
           </div>
           <ul className="navbar-nav ml-auto text-light d-inline-block">
             <li className="nav-item d-inline-block mr-4">
-              <i className="fab fa-imdb fa-5x" id="imdb-logo" />
+              <i className="fab fa-imdb fa-4x" id="imdb-logo" />
             </li>
             <li className="nav-item d-inline-block mr-4">
-              <i className="fab fa-react fa-5x" id="react-logo" />
+              <i className="fab fa-react fa-4x" id="react-logo" />
             </li>
           </ul>
         </div>
