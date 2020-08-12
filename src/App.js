@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import SearchArea from "./components/SearchArea";
+import MovieList from "./components/MovieList";
 
 class App extends Component {
   constructor() {
@@ -37,6 +38,7 @@ class App extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
+        <MovieList movies={this.state.movies} />
       </div>
     );
   }
