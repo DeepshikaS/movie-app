@@ -10,19 +10,19 @@ class App extends Component {
       movies: [],
       searchTerm: "",
     };
-    this.REACT_APP_apiKey = process.env.REACT_APP_API;
+    this.apiKey = "e525cef8eb907737703e82016cdd09af";
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${this.REACT_APP_apiKey}&query=${this.searchTerm}`
+      `https://api.themoviedb.org/3/search/movie?api_key=e525cef8eb907737703e82016cdd09af&query=${this.searchTerm}`
     )
       .then((data) => data.json())
-      .then((data) => {
-        console.log(data);
-        this.setState({ movies: [...data.results] });
+      .then((json) => {
+        console.log(json);
+        this.setState({ movies: [...json.results] });
       });
   };
 
