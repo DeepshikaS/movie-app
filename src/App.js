@@ -16,7 +16,6 @@ class App extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
     fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=e525cef8eb907737703e82016cdd09af&query=${this.searchTerm}`
     )
