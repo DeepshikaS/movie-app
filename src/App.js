@@ -11,19 +11,25 @@ class App extends Component {
       movies: [],
       searchTerm: "",
     };
-    this.apiKey = "e525cef8eb907737703e82016cdd09af";
+    this.apiKey = process.env.REACT_APP_API;
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
     fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=e525cef8eb907737703e82016cdd09af&query=${this.searchTerm}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.state.searchTerm}&language=en-US&page=${this.state.currentPage}`,
+      {
+        method: "GET", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     )
       .then((data) => data.json())
-      .then((json) => {
-        console.log(json);
-        this.setState({ movies: [...json.results] });
+      .then((data) => {
+        this.setState({ movies: [...data.results] });
       });
+
+    e.preventDefault();
   };
 
   handleChange = (e) => {
