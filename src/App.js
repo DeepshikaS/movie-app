@@ -10,6 +10,9 @@ class App extends Component {
     this.state = {
       movies: [],
       searchTerm: "",
+      totalResults: 0,
+      currentPage: 1,
+      //currentMovie: null
     };
     this.apiKey = process.env.REACT_APP_API;
   }
@@ -26,12 +29,30 @@ class App extends Component {
     )
       .then((data) => data.json())
       .then((data) => {
-        this.setState({ movies: [...data.results] });
+        this.setState({
+          movies: [...data.results],
+          totalResults: data.total_Results,
+        });
       });
 
     e.preventDefault();
   };
 
+  nextPage = (pageNumber) => {
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.state.searchTerm}&language=en-US&page=${pageNumber}`,
+      {
+        method: "GET", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((data) => data.json())
+      .then((data) => {
+        this.setState({ movies: [...data.results], currentPage: pageNumber });
+      });
+  };
   handleChange = (e) => {
     this.setState({ searchTerm: e.target.value });
   };
