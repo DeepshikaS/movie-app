@@ -57,6 +57,8 @@ class App extends Component {
     this.setState({ searchTerm: e.target.value });
   };
   render() {
+    const numberPages = Math.floor(this.state.totalResults / 20);
+
     return (
       <div className="App">
         <Navbar />
@@ -65,6 +67,15 @@ class App extends Component {
           handleSubmit={this.handleSubmit}
         />
         <MovieList movies={this.state.movies} />
+        {this.state.totalResults > 20 ? (
+          <Pagination
+            pages={numberPages}
+            nextPage={this.nextPage}
+            currentPage={this.state.currentPage}
+          />
+        ) : (
+          ""
+        )}
       </div>
     );
   }
