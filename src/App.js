@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import SearchArea from "./components/SearchArea";
 import MovieList from "./components/MovieList";
+import Pagination from "./components/Pagination";
 
 class App extends Component {
   constructor() {
