@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import SearchArea from "./components/SearchArea";
 import MovieList from "./components/MovieList";
 import Pagination from "./components/Pagination";
+import MovieInfo from "./components/MovieInfo";
 
 class App extends Component {
   constructor() {
@@ -13,10 +14,14 @@ class App extends Component {
       searchTerm: "",
       totalResults: 0,
       currentPage: 1,
-      //currentMovie: null
+      currentMovie: null,
     };
     this.apiKey = process.env.REACT_APP_API;
   }
+
+  handleChange = (e) => {
+    this.setState({ searchTerm: e.target.value });
+  };
 
   handleSubmit = (e) => {
     fetch(
@@ -32,7 +37,7 @@ class App extends Component {
       .then((data) => {
         this.setState({
           movies: [...data.results],
-          totalResults: data.total_Results,
+          totalResults: data.total_results,
         });
       });
 
@@ -54,21 +59,47 @@ class App extends Component {
         this.setState({ movies: [...data.results], currentPage: pageNumber });
       });
   };
-  handleChange = (e) => {
-    this.setState({ searchTerm: e.target.value });
+
+  viewMovieInfo = (id) => {
+    let filteredMovie;
+    this.state.movies.forEach((movie, i) => {
+      if (movie.id == id) {
+        filteredMovie = movie;
+      }
+    });
+
+    this.setState({ currentMovie: filteredMovie });
   };
+
+  closeMovieInfo = () => {
+    this.setState({ currentMovie: null });
+  };
+
   render() {
     const numberPages = Math.floor(this.state.totalResults / 20);
 
     return (
       <div className="App">
         <Navbar />
-        <SearchArea
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-        />
-        <MovieList movies={this.state.movies} />
-        {this.state.totalResults > 20 ? (
+        {this.state.currentMovie == null ? (
+          <div>
+            <SearchArea
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+            />
+            <MovieList
+              viewMovieInfo={this.viewMovieInfo}
+              movies={this.state.movies}
+            />
+          </div>
+        ) : (
+          <MovieInfo
+            closeMovieInfo={this.closeMovieInfo}
+            currentMovie={this.state.currentMovie}
+          />
+        )}
+
+        {this.state.totalResults > 20 && this.state.currentMovie == null ? (
           <Pagination
             pages={numberPages}
             nextPage={this.nextPage}
