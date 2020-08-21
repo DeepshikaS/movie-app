@@ -12,10 +12,10 @@ export default function Navbar() {
           </div>
           <ul className="navbar-nav ml-auto text-light d-inline-block">
             <li className="nav-item d-inline-block mr-4">
-              <i className="fab fa-imdb fa-4x" id="imdb-logo" />
+              <i className="fab fa-imdb fa-3x" id="imdb-logo" />
             </li>
             <li className="nav-item d-inline-block mr-4">
-              <i className="fab fa-react fa-4x" id="react-logo" />
+              <i className="fab fa-react fa-3x" id="react-logo" />
             </li>
           </ul>
         </div>
