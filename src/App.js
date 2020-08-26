@@ -10,11 +10,11 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      movies: [],
+      series: [],
       searchTerm: "",
       totalResults: 0,
       currentPage: 1,
-      currentMovie: null,
+      currentSeries: null,
     };
     this.apiKey = process.env.REACT_APP_API;
   }
@@ -25,7 +25,7 @@ class App extends Component {
 
   handleSubmit = (e) => {
     fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.state.searchTerm}&language=en-US&page=${this.state.currentPage}`,
+      `https://api.themoviedb.org/3/search/series?api_key=${this.apiKey}&query=${this.state.searchTerm}&language=en-US&page=${this.state.currentPage}`,
       {
         method: "GET", // or 'PUT'
         headers: {
@@ -36,7 +36,7 @@ class App extends Component {
       .then((data) => data.json())
       .then((data) => {
         this.setState({
-          movies: [...data.results],
+          series: [...data.results],
           totalResults: data.total_results,
         });
       });
@@ -46,7 +46,7 @@ class App extends Component {
 
   nextPage = (pageNumber) => {
     fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${this.state.searchTerm}&language=en-US&page=${pageNumber}`,
+      `https://api.themoviedb.org/3/search/series?api_key=${this.apiKey}&query=${this.state.searchTerm}&language=en-US&page=${pageNumber}`,
       {
         method: "GET", // or 'PUT'
         headers: {
@@ -56,23 +56,23 @@ class App extends Component {
     )
       .then((data) => data.json())
       .then((data) => {
-        this.setState({ movies: [...data.results], currentPage: pageNumber });
+        this.setState({ series: [...data.results], currentPage: pageNumber });
       });
   };
 
   viewMovieInfo = (id) => {
     let filteredMovie;
-    this.state.movies.forEach((movie, i) => {
-      if (movie.id == id) {
-        filteredMovie = movie;
+    this.state.series.forEach((series, i) => {
+      if (series.id == id) {
+        filteredMovie = series;
       }
     });
 
-    this.setState({ currentMovie: filteredMovie });
+    this.setState({ currentSeries: filteredMovie });
   };
 
   closeMovieInfo = () => {
-    this.setState({ currentMovie: null });
+    this.setState({ currentSeries: null });
   };
 
   render() {
@@ -81,7 +81,7 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar />
-        {this.state.currentMovie == null ? (
+        {this.state.currentSeries == null ? (
           <div>
             <SearchArea
               handleChange={this.handleChange}
@@ -89,17 +89,17 @@ class App extends Component {
             />
             <MovieList
               viewMovieInfo={this.viewMovieInfo}
-              movies={this.state.movies}
+              series={this.state.series}
             />
           </div>
         ) : (
           <MovieInfo
             closeMovieInfo={this.closeMovieInfo}
-            currentMovie={this.state.currentMovie}
+            currentSeries={this.state.currentSeries}
           />
         )}
 
-        {this.state.totalResults > 20 && this.state.currentMovie == null ? (
+        {this.state.totalResults > 20 && this.state.currentSeries == null ? (
           <Pagination
             pages={numberPages}
             nextPage={this.nextPage}
