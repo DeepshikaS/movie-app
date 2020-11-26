@@ -4,7 +4,7 @@ const Movie = (props) => {
   return (
     <div className="col s12 m6 l3">
       <div className="card">
-        <div class="card-image waves-effect waves-block waves-light">
+        <div className="card-image waves-effect waves-block waves-light">
           {props.image == null ? (
             <img
               className=""
